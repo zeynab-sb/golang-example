@@ -1,0 +1,249 @@
+---
+openapi: 3.0.0
+info:
+  title: Golang Example APIs
+  description: Golang Example APIs
+  contact: { }
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3030'
+
+paths:
+  /signup:
+    post:
+      tags:
+        - User
+      summary: Signup User
+      parameters: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_name:
+                  type: string
+                  example: "username"
+                password:
+                  type: string
+                  example: "Password1234!"
+              required:
+                - user_name
+                - token
+      responses:
+        201:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "success"
+                  token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1Nzc4MzY4NjAsImlhdCI6MTU3NzgzNjgwMCwibmJmIjoxNTc3ODM2ODAwLCJzdWIiOjF9.NFfVAWrBMyWHMvpmnKR7hKLngPTtf7NObp9J9kn78G8"
+
+        400:
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        500:
+          description: 'Internal Server Error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      deprecated: false
+  /login:
+    post:
+      tags:
+        - User
+      summary: Login User
+      parameters: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_name:
+                  type: string
+                  example: "username"
+                password:
+                  type: string
+                  example: "Password1234!"
+              required:
+                - user_name
+                - token
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "success"
+                  token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1Nzc4MzY4NjAsImlhdCI6MTU3NzgzNjgwMCwibmJmIjoxNTc3ODM2ODAwLCJzdWIiOjF9.NFfVAWrBMyWHMvpmnKR7hKLngPTtf7NObp9J9kn78G8"
+
+        400:
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        500:
+          description: 'Internal Server Error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      deprecated: false
+  /metas:
+    put:
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - User Meta
+      summary: Update user metas
+      parameters:
+        - in: query
+          name: age
+          schema:
+            type: integer
+            example: 22
+        - in: query
+          name: gender
+          schema:
+            type: string
+            example: "male"
+          required: false
+      responses:
+        204:
+          description: 'OK'
+        401:
+          description: 'UnAuthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        404:
+          description: |
+            In case of:
+            - A user with the specified id not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+        400:
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        500:
+          description: 'Internal Server Error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      deprecated: false
+    get:
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - User Meta
+      summary: Get user metas
+      parameters:
+        - in: query
+          name: key
+          schema:
+            type: string
+            enum: [ "age", "gender" ]
+          required: false
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMetasResponse'
+        401:
+          description: 'UnAuthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        404:
+          description: |
+            In case of:
+            - A user with the specified id not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+        500:
+          description: 'Internal Server Error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      deprecated: false
+
+components:
+  schemas:
+    Error400:
+      title: 'Bad request'
+      required:
+        - message
+      properties:
+        message:
+          type: string
+    Error500:
+      title: "Internal Server Error"
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          default: "Internal Server Error"
+    Error404:
+      title: 'Not Found'
+      required:
+        - message
+      properties:
+        message:
+          type: string
+    Error401:
+      title: 'UnAuthorized'
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          default: "Unauthorized"
+    GetMetasResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          key:
+            type: string
+            example: "gender"
+          value:
+            type: string
+            example: "male"
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

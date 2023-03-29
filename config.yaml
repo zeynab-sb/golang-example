@@ -1,0 +1,27 @@
+address: 0.0.0.0:8080
+database:
+  driver: mysql
+  host: db
+  port: 3306
+  db: database
+  user: app
+  password: app
+  max_conn: 10
+  idle_conn: 5
+  timeout: 10s
+  dial_retry: 1
+  dial_timeout: 5s
+redis:
+  dial_retry: 1
+  max_conn: 10
+  idle_conn: 5
+  address: 'redis:6379'
+  password: ''
+  db: 0
+  dial_timeout: 5s
+  read_timeout: 3s
+  write_timeout: 3s
+token:
+  expires_in: 5m
+  secret: secret
+loc_ttl: 30s

@@ -1,0 +1,91 @@
+{
+	"info": {
+		"_postman_id": "db9ceeb0-d11e-4ebd-bc93-b7ff972408a6",
+		"name": "Golang Example",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"user_name\":\"username\", \"password\":\"Password1234!\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3030/signup"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"user_name\":\"username\", \"password\":\"Password1234!\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3030/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Metas",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZXhwIjoxNjgwMTE0MzE0fQ.Cwj_owtz5HK_GBfpWhKj_rOBt63byQyq_ahCiaTrATU",
+						"type": "default"
+					}
+				],
+				"url": "http://localhost:3030/metas"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Metas",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZXhwIjoxNjgwMTE0MzE0fQ.Cwj_owtz5HK_GBfpWhKj_rOBt63byQyq_ahCiaTrATU",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3030/metas?age=22",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"metas"
+					],
+					"query": [
+						{
+							"key": "age",
+							"value": "22"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
