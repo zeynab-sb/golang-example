@@ -1,4 +1,4 @@
-module golang-example
+module github.com/zeynab-sb/golang-example
 
 go 1.18
 
